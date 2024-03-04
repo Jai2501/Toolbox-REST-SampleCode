@@ -13,5 +13,36 @@ const fetchAllAddresses = async (req, res) => {
   res.status(200).json(addresses);
 };
 
+// @desc    Add an address
+// @route   POST /api/addresses
+// @access  Public
+const addAddress = async (req, res) => {
+  const { title, description } = req.body;
+
+  // validate request body
+  if (!title || !description) {
+    return res.status(400).json({ message: "Please enter all fields." });
+  }
+
+  try {
+    // function provided by Mongoose to create a new Address document
+    const address = await Address.create({
+      title,
+      description,
+    });
+
+    // return the newly created Address in JSON format
+    // with created success status 201
+    res.status(201).json({
+      _id: address._id,
+      title: address.title,
+      description: address.description,
+    });
+  } catch (error) {
+    // catch exception when fields are missing
+    res.status(400).json({ message: "Invalid address data." });
+  }
+};
+
 // export controller functions to be used in corresponding route
-module.exports = { fetchAllAddresses };
+module.exports = { fetchAllAddresses, addAddress };
