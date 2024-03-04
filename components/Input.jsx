@@ -2,6 +2,7 @@
 
 import { Plus } from 'lucide-react'
 import { useState } from 'react';
+import axios from 'axios';
 
 const Input = () => {
     // State to store the input values
@@ -20,23 +21,26 @@ const Input = () => {
   };
 
     // Handle submission
-    const onSubmit = (e) => {
+    const onSubmit = async(e) => {
       e.preventDefault(); // Prevent form from reloading the page
   
       // Here you can use the input state values to do what you need
       console.log('Submitted:', input);
   
       // Add axios call to backend here
-
-
-
-      // Clear the input fields
-      setInput({
-        title: '',
-        description: ''
-      });
-
-      window.location.reload();
+      try {
+        await axios.post('http://localhost:8080/api/addresses', input)
+        
+        window.location.reload();
+        
+        // Clear the input fields
+        setInput({
+          title: '',
+          description: ''
+        });
+      } catch (error) {
+        console.error('Error creating address:', error)
+      }
     };
 
   return (
