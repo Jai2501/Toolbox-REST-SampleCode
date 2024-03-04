@@ -81,5 +81,29 @@ const updateAddress = async (req, res) => {
   }
 };
 
+// @desc    Delete an address
+// @route   DELETE /api/addresses
+// @access  Public
+const deleteAddress = async (req, res) => {
+  try {
+    // function provided by mongoose to find an
+    // Address document with a given ID
+    // req.params.id is retrieved from /:id in route
+    const address = await Address.findById(req.params.id);
+
+    // function provided by mongoose to delete a document
+    await address.deleteOne();
+
+    res.status(200).json({ message: "Address removed" });
+  } catch (error) {
+    res.status(404).json({ message: "Address not found" });
+  }
+};
+
 // export controller functions to be used in corresponding route
-module.exports = { fetchAllAddresses, addAddress, updateAddress };
+module.exports = {
+  fetchAllAddresses,
+  addAddress,
+  updateAddress,
+  deleteAddress,
+};

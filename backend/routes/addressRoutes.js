@@ -5,6 +5,7 @@ const {
   fetchAllAddresses,
   addAddress,
   updateAddress,
+  deleteAddress,
 } = require("../controllers/addressController");
 
 // call the fetchAllAddresses function
@@ -18,5 +19,9 @@ router.route("/").post(addAddress);
 // call the updateAddress function
 // when a PUT request is made to http://localhost:8080/api/addresses/:id
 router.route("/:id").put(updateAddress);
+
+// call the deleteAddress function
+// when a DELETE request is made to http://localhost:8080/api/addresses/:id
+router.route("/:id").delete(deleteAddress);
 
 module.exports = router;
