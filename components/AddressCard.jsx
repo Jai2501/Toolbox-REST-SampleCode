@@ -2,6 +2,7 @@
 
 import { FileEdit, Trash2 } from 'lucide-react'
 import { useState } from 'react'
+import axios from 'axios'
 
 const AddressCard = ({ address, onDelete }) => {
   // Initialize local state with props
@@ -18,13 +19,23 @@ const AddressCard = ({ address, onDelete }) => {
   };
 
   // Update function
-  const handleUpdate = () => {
-    console.log('Updating with:', title, description);
+  const handleUpdate = async () => {
+    console.log('Updating with:', address);
 
     // Make an API call
-
-
-    setOpenEdit(false); // Close the edit box after update
+    try {
+      await axios.put(
+        `http://localhost:8080/api/addresses/${address._id}`,
+        {
+          title: title, 
+          description: description
+        },
+      )
+      
+      setOpenEdit(false); // Close the edit box after update
+    } catch (error) {
+      console.error('Error updating address:', error)
+    }
   };
 
    // Update function
