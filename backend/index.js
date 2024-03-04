@@ -18,7 +18,16 @@ app.options(
 );
 app.use(cors());
 
-const PORT = 8080;
+// import the dependencies required for dotenv
+// the config() function allows for reading of the .env file
+const dotenv = require("dotenv").config();
+// import the connectDB function created earlier
+const connectDB = require("./config/db");
+
+// initialize connection to MongoDB database
+connectDB();
+
+const PORT = 8080 || process.env.PORT;
 
 // configure the Express.js application to run at port 8080
 // since you will be running this application on your computer (localhost),
