@@ -8,7 +8,7 @@ import axios from 'axios'
 const AddressCardList = () => {
   const [addresses, setAddresses] = useState([
     {
-      id: 1,
+      _id: 0,
       title: 'Home',
       description: '505 Independence Dr.',
     }
@@ -19,6 +19,7 @@ const AddressCardList = () => {
       try {
         // make a GET request to backend server via axios
         const response = await axios.get('http://localhost:8080/api/addresses')
+
         // update the addresses state with the retrieved data
         setAddresses(response.data) 
       } catch (error) {
@@ -34,7 +35,7 @@ const AddressCardList = () => {
       // Call API to delete address from the server...
 
       // If successful, update state to remove the address
-      setAddresses(addresses.filter(address => address.id !== addressId));
+      setAddresses(addresses.filter(address => address._id !== addressId));
   };
 
     

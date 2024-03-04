@@ -29,8 +29,8 @@ const AddressCard = ({ address, onDelete }) => {
 
    // Update function
    const handleDelete = () => {
-    console.log('Deleting:', address.id, title, description);
-    onDelete(address.id); // Calling Parent
+    console.log('Deleting:', address._id, title, description);
+    onDelete(address._id); // Calling Parent
   };
 
   return (
