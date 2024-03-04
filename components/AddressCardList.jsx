@@ -31,11 +31,19 @@ const AddressCardList = () => {
 }, [])
 
   // Function to delete an address
-  const deleteAddress = (addressId) => {
+  const deleteAddress = async (addressId) => {
       // Call API to delete address from the server...
 
-      // If successful, update state to remove the address
-      setAddresses(addresses.filter(address => address._id !== addressId));
+      try {
+        await axios.delete(
+          `http://localhost:8080/api/addresses/${addressId}`,
+        )
+
+        // If successful, update state to remove the address
+        setAddresses(addresses.filter(address => address._id !== addressId));
+      } catch (error) {
+        console.error('Error deleting address:', error)
+      }
   };
 
     
