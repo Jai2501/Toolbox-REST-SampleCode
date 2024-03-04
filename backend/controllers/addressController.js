@@ -44,5 +44,42 @@ const addAddress = async (req, res) => {
   }
 };
 
+// @desc    Update an address
+// @route   PUT /api/addresses
+// @access  Public
+const updateAddress = async (req, res) => {
+  const { title, description } = req.body;
+
+  // validate request body
+  if (!title || !description) {
+    return res.status(400).json({ message: "Please enter all fields." });
+  }
+
+  try {
+    // function provided by mongoose to find an
+    // Address document with a given ID
+    // req.params.id is retrieved from /:id in route
+    const address = await Address.findById(req.params.id);
+
+    // update the document
+    address.title = title;
+    address.description = description;
+
+    // function provided by mongoose to
+    // save the changes made to a document
+    await address.save();
+
+    // return the updated address in JSON format
+    // with success status 200
+    res.status(200).json({
+      _id: address._id,
+      title: address.title,
+      description: address.description,
+    });
+  } catch (error) {
+    res.status(400).json({ message: "Invalid address data." });
+  }
+};
+
 // export controller functions to be used in corresponding route
-module.exports = { fetchAllAddresses, addAddress };
+module.exports = { fetchAllAddresses, addAddress, updateAddress };
